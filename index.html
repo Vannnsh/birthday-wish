@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Riyu ❤️</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", sans-serif; }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #ffc1e3, #ff8fc7, #ff5fa2);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(15px);
+      padding: 35px;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      max-width: 420px;
+      animation: fadeIn 2s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 { font-size: 38px; margin-bottom: 10px; color: #d63384; white-space: nowrap; }
+
+    .name { font-size: 30px; margin-bottom: 15px; color: #b30059; font-weight: bold; }
+
+    p { font-size: 18px; line-height: 1.6; margin-bottom: 20px; color: #5a0033; }
+
+    .slideshow { width: 240px; height: 240px; border-radius: 20px; overflow: hidden; margin: 15px auto; border: 3px solid #ff4da6; position: relative; }
+
+    .slideshow img {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      max-width: 100%; max-height: 100%; width: auto; height: auto; opacity: 0; transition: opacity 1s ease-in-out;
+    }
+
+    .slideshow img.active { opacity: 1; }
+
+    button {
+      background: linear-gradient(45deg, #ff4da6, #ff1a75);
+      border: none; padding: 12px 26px; border-radius: 30px; font-size: 16px; color: white; cursor: pointer; transition: 0.3s ease;
+    }
+
+    button:hover { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,255,255,0.6); }
+
+    /* FINAL SCREEN */
+    .final-screen {
+      position: fixed; inset: 0; display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 10; color: white; overflow: hidden;
+    }
+
+    .bg-video {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; filter: brightness(0.5);
+    }
+
+    canvas { position: absolute; inset: 0; z-index: -1; }
+
+    .final-text {
+      font-size: 52px; font-weight: bold; color: #ff4da6; text-shadow: 0 0 20px #ff99cc, 0 0 40px #ff1a75; animation: pulse 2s infinite; padding: 20px;
+    }
+
+    .heart { position: absolute; bottom: -20px; font-size: 22px; animation: floatUp linear infinite; opacity: 0.7; }
+
+    @keyframes floatUp { from { transform: translateY(0) scale(1); } to { transform: translateY(-110vh) scale(1.6); opacity: 0; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+  </style>
+</head>
+
+<body>
+
+  <audio id="music" loop>
+    <source src="mere-naam-tu.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="card" id="card">
+    <h1>🎂 Happy Birthday 🎉</h1>
+    <div class="name">Riyu ❤️</div>
+
+    <div class="slideshow">
+      <img src="photo1.jpg" class="active" />
+      <img src="photo2.jpg" />
+      <img src="photo3.jpg" />
+    </div>
+
+    <p>Happy Birthday 💖<br/>Today is all about your smile, your happiness, and the love you bring into my life ✨</p>
+
+    <button class="open-heart-btn">Open My Heart 💌</button>
+  </div>
+
+  <!-- FINAL SCREEN -->
+  <div class="final-screen" id="finalScreen">
+    <video class="bg-video" id="bgVideo" autoplay muted loop playsinline>
+      <source src="romantic.mp4" type="video/mp4" />
+    </video>
+
+    <canvas id="fireworks"></canvas>
+
+    <div class="final-text">I Love You Riyu ❤️</div>
+  </div>
+
+  <script>
+const openBtn = document.querySelector('.open-heart-btn');
+const finalScreen = document.getElementById('finalScreen');
+const bgVideo = document.getElementById('bgVideo');
+const music = document.getElementById('music');
+
+openBtn.addEventListener('click', () => {
+  // hide first card
+  document.getElementById('card').style.display = 'none';
+
+  // show final romantic screen
+  finalScreen.style.display = 'flex';
+
+  // play background video safely
+  if (bgVideo) {
+    bgVideo.muted = true; // autoplay allowed only when muted
+    bgVideo.currentTime = 0;
+    bgVideo.play().catch(() => {});
+
+    // unmute softly after 1s
+    setTimeout(() => {
+      bgVideo.muted = false;
+    }, 1000);
+  }
+
+  // play music
+  if (music) {
+    music.currentTime = 0;
+    music.play().catch(() => {});
+  }
+
+  // start fireworks animation
+  startFireworks();
+});
+</script>
+</body>
+</html>
